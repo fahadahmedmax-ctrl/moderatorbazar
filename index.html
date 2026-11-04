@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moderator Bazar - মডারেটর খোঁজার প্ল্যাটফর্ম</title>
+    <title>Moderator Bazar - মডারেটর খোঁজার সেরা প্ল্যাটফর্ম | Moderator Hire BD</title>
+    
+    <!-- SEO Meta Tags for Google Top Ranking -->
+    <meta name="description" content="মডারেটর বাজার হলো বাংলাদেশের সেরা ও বিশ্বস্ত প্ল্যাটফর্ম। ফেসবুক পেজ, ইনস্টাগ্রাম ও ই-কমার্স বিজনেসের জন্য অভিজ্ঞ মডারেটর খুঁজুন অথবা মডারেটর হিসেবে ফ্রি ও VIP প্রোফাইল তৈরি করুন।">
+    <meta name="keywords" content="Moderator Bazar, মডারেটর বাজার, ফেসবুক পেজ মডারেটর জব, moderator hire bangladesh, buy moderator profile, page moderator in bd">
+    <meta name="author" content="Fahad Ahmed">
+    <link rel="canonical" href="https://yourdomain.com/">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Moderator Bazar - মডারেটর খোঁজার প্ল্যাটফর্ম">
+    <meta property="og:description" content="আপনার পেজের জন্য দক্ষ মডারেটর হায়ার করুন অথবা মডারেটর হিসেবে জব খুঁজুন খুব সহজেই।">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
     <style>
         body { font-family: 'Hind Siliguri', sans-serif; }
         .vip-card {
@@ -48,7 +63,7 @@
                     <a href="#reviews" class="hover:text-indigo-300 transition">রিভিউ</a>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button onclick="openModal('modModal')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-medium shadow transition text-sm sm:text-base">
+                    <button onclick="openModal('jobModal')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-medium shadow transition text-sm sm:text-base">
                         + পোস্ট করুন
                     </button>
                 </div>
@@ -193,7 +208,7 @@
         </div>
     </div>
 
-    <!-- Moderator Profile Modal (With 2 Clickable Options: Free / VIP) -->
+    <!-- Moderator Profile Modal -->
     <div id="modModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50 overflow-y-auto">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto my-8">
             <button onclick="closeModal('modModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -226,7 +241,7 @@
                     <input type="text" id="modContact" required placeholder="যেমন: 01700000000" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
 
-                <!-- 2 Clickable Options for Profile Type (Free on top, VIP on bottom) -->
+                <!-- 2 Clickable Options for Profile Type -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-2">প্রোফাইল ক্যাটাগরি নির্বাচন করুন</label>
                     <div class="grid grid-cols-2 gap-3">
@@ -243,7 +258,7 @@
                     </div>
                 </div>
 
-                <!-- Hidden VIP Payment Fields (Shown only if VIP clicked) -->
+                <!-- Hidden VIP Payment Fields -->
                 <div id="vipFields" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-lg space-y-3">
                     <div class="text-xs text-amber-900 space-y-1">
                         <p><strong>বিকাশ পার্সোনাল নম্বর:</strong> <span class="text-indigo-600 font-bold text-sm">01755083711</span> (Send Money)</p>
@@ -687,10 +702,11 @@
 
             // Moderators Table with VIP Toggle
             const modsTable = document.getElementById('adminModsTable');
-            modsTable.innerHTML = '';
+            modsTable.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-slate-400">লোড হচ্ছে...</td></tr>';
             if (modsData.length === 0) {
                 modsTable.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-slate-400">কোনো মডারেটর নেই</td></tr>';
             } else {
+                modsTable.innerHTML = '';
                 modsData.forEach(mod => {
                     const isVip = mod.is_vip === true;
                     modsTable.innerHTML += `
