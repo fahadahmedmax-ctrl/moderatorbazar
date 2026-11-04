@@ -409,6 +409,7 @@
                 for (let id in val) {
                     modsData.push({ id: id, ...val[id] });
                 }
+                modsData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
             }
             if (currentTab === 'mods') renderContent();
         });
@@ -478,11 +479,14 @@
                     return;
                 }
 
-                // VIP Sorting Logic: is_vip true wale sobar upore thakbe
+                // সঠিক সর্টিং: নতুনরা ওপরে থাকবে এবং VIP রা সবার ওপরে থাকবে
                 const sortedMods = [...modsData].sort((a, b) => {
                     const aVip = a.is_vip ? 1 : 0;
                     const bVip = b.is_vip ? 1 : 0;
-                    return bVip - aVip;
+                    if (bVip !== aVip) {
+                        return bVip - aVip; 
+                    }
+                    return (b.timestamp || 0) - (a.timestamp || 0);
                 });
 
                 sortedMods.forEach(mod => {
