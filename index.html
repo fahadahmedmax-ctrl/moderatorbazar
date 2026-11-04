@@ -193,7 +193,7 @@
         </div>
     </div>
 
-    <!-- Moderator Profile Modal (With Free / VIP options inside) -->
+    <!-- Moderator Profile Modal (With 2 Clickable Options: Free / VIP) -->
     <div id="modModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50 overflow-y-auto">
         <div class="bg-white rounded-xl shadow-xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto my-8">
             <button onclick="closeModal('modModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -226,16 +226,24 @@
                     <input type="text" id="modContact" required placeholder="যেমন: 01700000000" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
 
-                <!-- Profile Type Selection (Free / VIP) -->
+                <!-- 2 Clickable Options for Profile Type (Free on top, VIP on bottom) -->
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">প্রোফাইল ক্যাটাগরি</label>
-                    <select id="profileType" onchange="toggleVipFields()" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-indigo-900">
-                        <option value="free">ফ্রি প্রোফাইল (Free)</option>
-                        <option value="vip">⭐ VIP প্রোফাইল (২০ টাকা - বিকাশ)</option>
-                    </select>
+                    <label class="block text-sm font-medium text-slate-700 mb-2">প্রোফাইল ক্যাটাগরি নির্বাচন করুন</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="cursor-pointer border-2 rounded-lg p-3 flex flex-col items-center justify-center transition hover:border-indigo-500 bg-slate-50" id="freeCard">
+                            <input type="radio" name="profileType" value="free" checked onchange="setProfileType('free')" class="mb-1">
+                            <span class="font-bold text-sm text-slate-800">ফ্রি প্রোফাইল</span>
+                            <span class="text-xs text-slate-500">কোনো ফি নেই</span>
+                        </label>
+                        <label class="cursor-pointer border-2 rounded-lg p-3 flex flex-col items-center justify-center transition hover:border-amber-500 bg-amber-50/50" id="vipCard">
+                            <input type="radio" name="profileType" value="vip" onchange="setProfileType('vip')" class="mb-1">
+                            <span class="font-bold text-sm text-amber-800">⭐ VIP প্রোফাইল</span>
+                            <span class="text-xs text-amber-600">২০ টাকা (বিকাশ)</span>
+                        </label>
+                    </div>
                 </div>
 
-                <!-- Hidden VIP Payment Fields (Shown only if VIP selected) -->
+                <!-- Hidden VIP Payment Fields (Shown only if VIP clicked) -->
                 <div id="vipFields" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-lg space-y-3">
                     <div class="text-xs text-amber-900 space-y-1">
                         <p><strong>বিকাশ পার্সোনাল নম্বর:</strong> <span class="text-indigo-600 font-bold text-sm">01755083711</span> (Send Money)</p>
@@ -426,20 +434,25 @@
             return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
-        function toggleVipFields() {
-            const type = document.getElementById('profileType').value;
+        function setProfileType(type) {
             const vipFields = document.getElementById('vipFields');
             const bkashInput = document.getElementById('modBkash');
             const trxInput = document.getElementById('modTrxId');
+            const freeCard = document.getElementById('freeCard');
+            const vipCard = document.getElementById('vipCard');
 
             if (type === 'vip') {
                 vipFields.classList.remove('hidden');
                 bkashInput.required = true;
                 trxInput.required = true;
+                vipCard.className = "cursor-pointer border-2 border-amber-500 rounded-lg p-3 flex flex-col items-center justify-center transition bg-amber-100/60 shadow-sm";
+                freeCard.className = "cursor-pointer border-2 rounded-lg p-3 flex flex-col items-center justify-center transition hover:border-indigo-500 bg-slate-50";
             } else {
                 vipFields.classList.add('hidden');
                 bkashInput.required = false;
                 trxInput.required = false;
+                freeCard.className = "cursor-pointer border-2 border-indigo-500 rounded-lg p-3 flex flex-col items-center justify-center transition bg-indigo-50/60 shadow-sm";
+                vipCard.className = "cursor-pointer border-2 rounded-lg p-3 flex flex-col items-center justify-center transition hover:border-amber-500 bg-amber-50/50";
             }
         }
 
@@ -485,7 +498,6 @@
                     return;
                 }
 
-                // সঠিক সর্টিং: নতুনরা ওপরে থাকবে এবং VIP রা সবার ওপরে থাকবে
                 const sortedMods = [...modsData].sort((a, b) => {
                     const aVip = a.is_vip ? 1 : 0;
                     const bVip = b.is_vip ? 1 : 0;
@@ -544,6 +556,9 @@
 
         function openModal(id) {
             document.getElementById(id).classList.remove('hidden');
+            if(id === 'modModal') {
+                setProfileType('free');
+            }
         }
 
         function closeModal(id) {
@@ -576,7 +591,7 @@
 
         function handleModSubmit(e) {
             e.preventDefault();
-            const profileType = document.getElementById('profileType').value;
+            const profileType = document.querySelector('input[name="profileType"]:checked').value;
             const modName = document.getElementById('modName').value;
 
             const newMod = {
@@ -585,7 +600,7 @@
                 shift: document.getElementById('modShift').value,
                 skills: document.getElementById('modSkills').value,
                 contact: document.getElementById('modContact').value,
-                is_vip: false, // ডিফল্টভাবে ফ্রি থাকবে, এডমিন বা ভিআইপি রিকোয়েস্ট থেকে অন হবে
+                is_vip: false,
                 timestamp: Date.now()
             };
 
@@ -593,7 +608,6 @@
                 if (error) {
                     alert('প্রোফাইল জমা দিতে সমস্যা হয়েছে: ' + error.message);
                 } else {
-                    // যদি ইউজার VIP সিলেক্ট করে থাকে, তবে সাথে সাথে vip_requests টেবিলেও ডাটা পাঠিয়ে দেবো যেন এডমিন দেখতে পায়
                     if (profileType === 'vip') {
                         const vipReq = {
                             name: modName,
@@ -606,7 +620,7 @@
 
                     closeModal('modModal');
                     document.getElementById('modForm').reset();
-                    toggleVipFields();
+                    setProfileType('free');
                     switchTab('mods');
                     
                     if (profileType === 'vip') {
