@@ -69,9 +69,35 @@
             align-items: center;
             gap: 3px;
         }
+        /* Floating WhatsApp Icon CSS */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 99;
+            transition: transform 0.3s ease;
+        }
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
+
+    <!-- Floating WhatsApp Icon at Bottom Right -->
+    <a href="https://whatsapp.com/channel/0029Vb9FIwbFHWq6VSRbr71J" target="_blank" class="floating-whatsapp" title="WhatsApp Channel">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
     <!-- Navbar -->
     <nav class="bg-indigo-900 text-white sticky top-0 z-50 shadow-md">
@@ -112,9 +138,6 @@
             <div class="flex flex-wrap justify-center gap-4 pt-4">
                 <a href="#jobs" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">মডারেটর খুঁজুন</a>
                 <button onclick="openModal('modModal')" class="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-6 py-3 rounded-lg shadow transition">মডারেটর প্রোফাইল তৈরি করুন</button>
-                <a href="https://whatsapp.com/channel/0029Vb9FIwbFHWq6VSRbr71J" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-lg shadow transition flex items-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-xl"></i> WhatsApp Channel
-                </a>
             </div>
         </div>
     </section>
@@ -186,17 +209,9 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
             <p class="text-xl font-bold text-white">Moderator Bazar</p>
             <p class="text-sm">বাংলাদেশের বিশ্বস্ত মডারেটর মার্কেটপ্লেস</p>
-            
-            <!-- WhatsApp Channel Button in Footer -->
-            <div>
-                <a href="https://whatsapp.com/channel/0029Vb9FIwbFHWq6VSRbr71J" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm px-4 py-2 rounded-full transition shadow">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> Follow our WhatsApp Channel
-                </a>
-            </div>
-
             <div>
                 <button onclick="openAdminLogin()" class="text-xs text-indigo-400 hover:text-indigo-300 underline font-medium cursor-pointer">
                     <i class="fa-solid fa-lock mr-1"></i> এডমিন প্যানেল (Admin Access)
@@ -338,11 +353,11 @@
 
     <!-- Admin Dashboard Modal -->
     <div id="adminDashboardModal" class="fixed inset-0 bg-black/70 backdrop-blur-md hidden flex justify-center items-center p-4 z-50 overflow-y-auto">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl p-6 relative max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-5xl p-6 relative max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-4 mb-6">
                 <div>
                     <h3 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-gauge-high text-indigo-600 mr-2"></i>এডমিন কন্ট্রোল প্যানেল</h3>
-                    <p class="text-xs text-slate-500">মডারেটরদের VIP স্ট্যাটাস এবং পেমেন্ট ম্যানেজ করুন</p>
+                    <p class="text-xs text-slate-500">মডারেটরদের VIP স্ট্যাটাস, পেমেন্ট এবং ডাটা ডিলেট ম্যানেজ করুন</p>
                 </div>
                 <button onclick="closeModal('adminDashboardModal')" class="text-slate-400 hover:text-slate-600 bg-slate-100 p-2 rounded-full"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
@@ -385,18 +400,19 @@
                                     <th class="p-3 border-b">বিকাশ নম্বর</th>
                                     <th class="p-3 border-b">TrxID</th>
                                     <th class="p-3 border-b text-center">স্ট্যাটাস</th>
+                                    <th class="p-3 border-b text-center">অ্যাকশন</th>
                                 </tr>
                             </thead>
                             <tbody id="adminVipTable">
-                                <tr><td colspan="4" class="p-3 text-center text-slate-400">কোনো আবেদন নেই</td></tr>
+                                <tr><td colspan="5" class="p-3 text-center text-slate-400">কোনো আবেদন নেই</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Manage Moderators (With VIP Toggle) -->
+                <!-- Manage Moderators (With VIP Toggle & Delete Button) -->
                 <div>
-                    <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2"><i class="fa-solid fa-user-check text-emerald-600"></i> মডারেটর প্রোফাইল ও VIP টগল</h4>
+                    <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2"><i class="fa-solid fa-user-check text-emerald-600"></i> মডারেটর প্রোফাইল ম্যানেজমেন্ট</h4>
                     <div class="overflow-x-auto border rounded-lg">
                         <table class="w-full text-left border-collapse text-sm">
                             <thead class="bg-slate-100 text-slate-700">
@@ -414,6 +430,28 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- Manage Job Posts (With Delete Button) -->
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2"><i class="fa-solid fa-briefcase text-indigo-600"></i> জব পোস্ট ম্যানেজমেন্ট</h4>
+                    <div class="overflow-x-auto border rounded-lg">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead class="bg-slate-100 text-slate-700">
+                                <tr>
+                                    <th class="p-3 border-b">পেজের নাম</th>
+                                    <th class="p-3 border-b">প্ল্যাটফর্ম</th>
+                                    <th class="p-3 border-b">বেতন</th>
+                                    <th class="p-3 border-b">যোগাযোগ</th>
+                                    <th class="p-3 border-b text-center">অ্যাকশন</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminJobsTable">
+                                <!-- Dynamic Jobs -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -714,6 +752,45 @@
             });
         }
 
+        // Delete Functions for Admin
+        function deleteMod(modId) {
+            if (confirm('আপনি কি সত্যিই এই মডারেটর প্রোফাইলটি মুছে ফেলতে চান?')) {
+                modsRef.child(modId).remove((error) => {
+                    if (!error) {
+                        renderAdminDashboard();
+                        renderContent();
+                    } else {
+                        alert('প্রোফাইল মুছতে সমস্যা হয়েছে: ' + error.message);
+                    }
+                });
+            }
+        }
+
+        function deleteJob(jobId) {
+            if (confirm('আপনি কি সত্যিই এই জব পোস্টটি মুছে ফেলতে চান?')) {
+                jobsRef.child(jobId).remove((error) => {
+                    if (!error) {
+                        renderAdminDashboard();
+                        renderContent();
+                    } else {
+                        alert('পোস্ট মুছতে সমস্যা হয়েছে: ' + error.message);
+                    }
+                });
+            }
+        }
+
+        function deleteVipReq(reqId) {
+            if (confirm('আপনি কি এই VIP আবেদন তালিকা থেকে মুছে ফেলতে চান?')) {
+                vipRef.child(reqId).remove((error) => {
+                    if (!error) {
+                        renderAdminDashboard();
+                    } else {
+                        alert('আবেদন মুছতে সমস্যা হয়েছে: ' + error.message);
+                    }
+                });
+            }
+        }
+
         function renderAdminDashboard() {
             document.getElementById('adminJobCount').innerText = jobsData.length;
             document.getElementById('adminModCount').innerText = modsData.length;
@@ -723,7 +800,7 @@
             const vipTable = document.getElementById('adminVipTable');
             vipTable.innerHTML = '';
             if (vipData.length === 0) {
-                vipTable.innerHTML = '<tr><td colspan="4" class="p-3 text-center text-slate-400">কোনো VIP আবেদন নেই</td></tr>';
+                vipTable.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-slate-400">কোনো VIP আবেদন নেই</td></tr>';
             } else {
                 vipData.forEach(req => {
                     vipTable.innerHTML += `
@@ -732,18 +809,22 @@
                             <td class="p-3 text-slate-600">${escapeHtml(req.bkash)}</td>
                             <td class="p-3 font-bold text-indigo-600">${escapeHtml(req.trxId)}</td>
                             <td class="p-3 text-center"><span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded font-bold">Pending</span></td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteVipReq('${req.id}')" class="px-2.5 py-1 rounded text-xs font-bold bg-red-100 text-red-600 hover:bg-red-200 transition">
+                                    <i class="fa-solid fa-trash"></i> ডিলিট
+                                </button>
+                            </td>
                         </tr>
                     `;
                 });
             }
 
-            // Moderators Table with VIP Toggle
+            // Moderators Table with VIP Toggle & Delete Button
             const modsTable = document.getElementById('adminModsTable');
-            modsTable.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-slate-400">লোড হচ্ছে...</td></tr>';
+            modsTable.innerHTML = '';
             if (modsData.length === 0) {
                 modsTable.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-slate-400">কোনো মডারেটর নেই</td></tr>';
             } else {
-                modsTable.innerHTML = '';
                 modsData.forEach(mod => {
                     const isVip = mod.is_vip === true;
                     modsTable.innerHTML += `
@@ -756,9 +837,35 @@
                                     ${isVip ? '⭐ VIP' : 'Free'}
                                 </span>
                             </td>
-                            <td class="p-3 text-center">
-                                <button onclick="toggleVipStatus('${mod.id}', ${isVip})" class="px-3 py-1.5 rounded text-xs font-bold text-white transition ${isVip ? 'bg-red-600 hover:bg-red-500' : 'bg-amber-500 hover:bg-amber-400 text-slate-900'}">
+                            <td class="p-3 text-center space-x-1">
+                                <button onclick="toggleVipStatus('${mod.id}', ${isVip})" class="px-2.5 py-1 rounded text-xs font-bold text-white transition ${isVip ? 'bg-amber-600 hover:bg-amber-500' : 'bg-indigo-600 hover:bg-indigo-500'}">
                                     ${isVip ? 'VIP সরান' : 'VIP করুন'}
+                                </button>
+                                <button onclick="deleteMod('${mod.id}')" class="px-2.5 py-1 rounded text-xs font-bold bg-red-500 hover:bg-red-600 text-white transition">
+                                    <i class="fa-solid fa-trash"></i> ডিলিট
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // Jobs Table with Delete Button
+            const jobsTable = document.getElementById('adminJobsTable');
+            jobsTable.innerHTML = '';
+            if (jobsData.length === 0) {
+                jobsTable.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-slate-400">কোনো জব পোস্ট নেই</td></tr>';
+            } else {
+                jobsData.forEach(job => {
+                    jobsTable.innerHTML += `
+                        <tr class="border-b hover:bg-slate-50">
+                            <td class="p-3 font-medium text-slate-800">${escapeHtml(job.pageName)}</td>
+                            <td class="p-3 text-slate-600">${escapeHtml(job.platform)}</td>
+                            <td class="p-3 text-slate-600 font-bold">${escapeHtml(job.salary)}</td>
+                            <td class="p-3 text-slate-600">${escapeHtml(job.contact)}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteJob('${job.id}')" class="px-2.5 py-1 rounded text-xs font-bold bg-red-500 hover:bg-red-600 text-white transition">
+                                    <i class="fa-solid fa-trash"></i> ডিলিট
                                 </button>
                             </td>
                         </tr>
