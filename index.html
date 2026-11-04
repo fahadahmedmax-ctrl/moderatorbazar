@@ -90,47 +90,6 @@
         .floating-whatsapp:hover {
             transform: scale(1.1);
         }
-
-        /* Side APK Download Box CSS */
-        .side-download-box {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #ffffff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            text-align: center;
-            z-index: 1000;
-            width: 170px;
-            border: 2px solid #10b981;
-        }
-        .side-download-box h3 {
-            margin: 0 0 10px 0;
-            font-size: 14px;
-            color: #333;
-            font-weight: bold;
-        }
-        .side-download-btn {
-            display: inline-block;
-            background-color: #10b981;
-            color: white;
-            padding: 8px 12px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 13px;
-            transition: background 0.3s ease;
-        }
-        .side-download-btn:hover {
-            background-color: #059669;
-        }
-        @media (max-width: 768px) {
-            .side-download-box {
-                display: none; /* মোবাইলে স্ক্রিন ছোট থাকায় এটি হাইড থাকবে, চাইলে দেখাতেও পারেন */
-            }
-        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -139,12 +98,6 @@
     <a href="https://whatsapp.com/channel/0029Vb9FIwbFHWq6VSRbr71J" target="_blank" class="floating-whatsapp" title="WhatsApp Channel">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
-
-    <!-- Website Side Download Box -->
-    <div class="side-download-box">
-        <h3>মোবাইল অ্যাপ</h3>
-        <a href="app-file-name.apk" class="side-download-btn" download><i class="fa-solid fa-download mr-1"></i> Download APK</a>
-    </div>
 
     <!-- Navbar -->
     <nav class="bg-indigo-900 text-white sticky top-0 z-50 shadow-md">
@@ -185,11 +138,6 @@
             <div class="flex flex-wrap justify-center gap-4 pt-4">
                 <a href="#jobs" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition">মডারেটর খুঁজুন</a>
                 <button onclick="openModal('modModal')" class="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-6 py-3 rounded-lg shadow transition">মডারেটর প্রোফাইল তৈরি করুন</button>
-                
-                <!-- App Download Button -->
-                <a href="app-file-name.apk" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-lg shadow transition flex items-center gap-2" download>
-                    <i class="fa-solid fa-download"></i> অ্যাপ ডাউনলোড (APK)
-                </a>
             </div>
         </div>
     </section>
@@ -767,7 +715,7 @@
         function handleAdminLogin(e) {
             e.preventDefault();
             const pass = document.getElementById('adminPassInput').value;
-            if (pass === 'fahadahmed123' || pass === 'admin123') {
+            if (pass === 'FAHAD007') {
                 closeModal('adminLoginModal');
                 document.getElementById('adminPassInput').value = '';
                 openModal('adminDashboardModal');
